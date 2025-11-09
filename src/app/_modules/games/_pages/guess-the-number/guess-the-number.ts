@@ -22,9 +22,9 @@ export class GuessTheNumber implements OnInit {
   ngOnInit(): void {
     this.mainNumber = Math.floor(Math.random() *100)
       console.log(this.mainNumber)}
-guessNumber(userNumber: number): void {
-  if (userNumber < 0 || userNumber > 100) {
-    this.message = "Please enter a number between 0 and 100.";
+      guessNumber(userNumber: number): void {
+        if (userNumber < 0 || userNumber > 100) {
+        this.message = "Please enter a number between 0 and 100.";
     return;
   }
 
@@ -38,7 +38,7 @@ guessNumber(userNumber: number): void {
   } else if (userNumber < this.mainNumber) {
     this.message = "The number is bigger than";
   } else {
-    this.winner = "You won!!";
+    this.winner = "🎉 You won the game!";
     this.message = "";
     return;
   }
@@ -57,6 +57,7 @@ reset() {
   this.userChoices = [];
   this.lastChoice = 0;
   this.mainNumber = Math.floor(Math.random() * 100);
+  console.log(this.mainNumber)
 }
 
 }

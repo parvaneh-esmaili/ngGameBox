@@ -14,6 +14,8 @@ export class MemoryGame implements OnInit {
   firstCard: any = null;
   secondCard: any = null;
   lockBoard = false;
+  message : string = '';
+  win: boolean = false;
 
   ngOnInit(): void {
     const doubleItems = [...this.items, ...this.items];
@@ -39,20 +41,33 @@ export class MemoryGame implements OnInit {
     if (this.firstCard.value === this.secondCard.value) {
       this.firstCard.matched = true;
       this.secondCard.matched = true;
-      this.resetSelection();
+      this.reset();
+       if (this.itemsForGame.every(card => card.matched)) {
+      this.message = ("🎉 You won the game!");
+      this.win = !this.win
+    }
     } else {
       this.lockBoard = true;
       setTimeout(() => {
         this.firstCard.flipped = false;
         this.secondCard.flipped = false;
-        this.resetSelection();
+        this.reset();
       }, 1000);
     }
   }
 
-  resetSelection(): void {
+  reset(): void {
     this.firstCard = null;
     this.secondCard = null;
     this.lockBoard = false;
+    this.win = false
   }
+  resetGame(): void { 
+    this.message = '';
+    this.win = false; 
+    this.firstCard = null;
+    this.secondCard = null; 
+    this.lockBoard = false; 
+    this.ngOnInit(); 
+    this.win = false; }
 }
