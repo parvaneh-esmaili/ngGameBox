@@ -69,5 +69,6 @@ export class MemoryGame implements OnInit {
     this.secondCard = null; 
     this.lockBoard = false; 
     this.ngOnInit(); 
-    this.win = false; }
+    this.win = false
+    }
 }

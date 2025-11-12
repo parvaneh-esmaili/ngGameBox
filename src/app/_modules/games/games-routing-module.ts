@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Home } from './_pages/home/home';
-import { RockPaperScissors } from './_pages/rock-paper-scissors/rock-paper-scissors';
+import { RockPaperScissors } from './_components/rock-paper-scissors/rock-paper-scissors';
 import { Games } from './games';
-import { GuessTheNumber } from './_pages/guess-the-number/guess-the-number';
-import { MemoryGame } from './_pages/memory-game/memory-game';
+import { GuessTheNumber } from './_components/guess-the-number/guess-the-number';
+import { MemoryGame } from './_components/memory-game/memory-game';
 
 const routes: Routes = [
   {path: '', component: Games, children:[
