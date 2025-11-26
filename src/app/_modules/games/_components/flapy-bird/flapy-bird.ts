@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-flapy-bird',
@@ -10,17 +10,18 @@ import { Component } from '@angular/core';
 export class FlapyBird {
   positionY: number = 0;
   gravity: number = 2;
+  ground: number = 0;
 
   constructor() {
     this.positionY = window.innerHeight / 2;
 
     setInterval(() => {
       this.fall();
-    }, 30);
+    }, 25);
   }
 
   fly() {
-    this.positionY -= 50;
+    this.positionY -= 150;
     if (this.positionY < 0) {
       this.positionY = 0;
     }
@@ -29,9 +30,21 @@ export class FlapyBird {
   fall() {
     this.positionY += this.gravity;
 
-    const ground = window.innerHeight - 50;
-    if (this.positionY > ground) {
-      this.positionY = ground;
+    this.ground = window.innerHeight - 50;
+    if (this.positionY > this.ground) {
+      this.positionY = this.ground;
     }
+  }
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.code === 'Space') {
+      this.fly();
+    }
+  }
+
+  @HostListener('window:click', ['$event'])
+  handleLeftClick(event: MouseEvent) {
+      this.fly();
+    
   }
 }
