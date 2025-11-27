@@ -9,21 +9,39 @@ import { Component, HostListener } from '@angular/core';
 })
 export class FlapyBird {
   positionY: number = 0;
+  positionX: number = 0;
+
   gravity: number = 2;
   ground: number = 0;
+  gameOver: boolean = false;
+
+  obstacles: { x: number; y: number; width: number; height: number }[] = [];
 
   constructor() {
+    this.positionX = window.innerWidth / 2;
     this.positionY = window.innerHeight / 2;
 
+    this.obstacles.push({ x: window.innerWidth, y: 0, width: 60, height: 200 });
+
+    this.obstacles.push({
+      x: window.innerWidth,
+      y: 300,
+      width: 60,
+      height: window.innerHeight - 300,
+    });
     setInterval(() => {
-      this.fall();
+      if (!this.gameOver) {
+        this.fall();
+        this.moveObstacles();
+        this.checkCollision();
+      }
     }, 25);
   }
 
   fly() {
     this.positionY -= 150;
-    if (this.positionY < 0) {
-      this.positionY = 0;
+    if (this.positionY < 100) {
+      this.positionY = 100;
     }
   }
 
@@ -44,7 +62,60 @@ export class FlapyBird {
 
   @HostListener('window:click', ['$event'])
   handleLeftClick(event: MouseEvent) {
-      this.fly();
-    
+    this.fly();
+  }
+  moveObstacles() {
+    this.obstacles.forEach((obstacle) => (obstacle.x -= 5));
+
+    const lastObstacle = this.obstacles[this.obstacles.length - 1];
+
+    // add new pipes when last reaches half screen
+    if (lastObstacle.x <= window.innerWidth / 2) {
+      const gap = 150;
+      const topHeight = Math.random() * (window.innerHeight - gap - 100);
+
+      this.obstacles.push({
+        x: window.innerWidth,
+        y: 0,
+        width: 60,
+        height: topHeight,
+      });
+      this.obstacles.push({
+        x: window.innerWidth,
+        y: topHeight + gap,
+        width: 60,
+        height: window.innerHeight - (topHeight + gap),
+      }); // bottom pipe
+    }
+
+    // remove old pipes
+    if (this.obstacles[0].x + this.obstacles[0].width < 0) {
+      this.obstacles.shift();
+      this.obstacles.shift();
+    }
+  }
+checkCollision() {
+  const birdW = 10
+  const birdH = 10;
+
+  const hit = this.obstacles.some(obs =>
+    this.positionX < obs.x + obs.width &&
+    this.positionX + birdW > obs.x &&
+    this.positionY < obs.y + obs.height &&
+    this.positionY + birdH > obs.y
+  );
+
+  if (hit) this.gameOver = true;
+}
+
+
+
+  reset(){
+    this.gameOver = false;
+     this.positionX = window.innerHeight;
+     this.obstacles = [
+    { x: window.innerWidth, y: 0, width: 60, height: 200 },
+    { x: window.innerWidth, y: 300, width: 60, height: window.innerHeight - 300 },
+  ];
   }
 }
