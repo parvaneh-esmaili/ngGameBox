@@ -1,39 +1,11 @@
 <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 bg-blue-50 h-screen p-12">
-<app-game-card
-  title=" Rock Paper Scissors ✊✋✌"
-  description="Choose rock, paper, or scissors and beat the computer!"
-  buttonText="Play Now"
-  (buttonClick)="navigateToGame('/rock-paper-scissors')"
-></app-game-card>
-
-
-<app-game-card
-  title="Guess The Number 🔢"
-  description="Try to guess the number the computer is thinking of!"
-  buttonText="Play Now"
-  (buttonClick)="navigateToGame('/guess-the-number')"
-></app-game-card>
-
-<app-game-card
-  title="Memory Game 🧠🃏🔄"
-  description="Flip the cards and match the pairs to test your memory skills!"
-  buttonText="Play Now"
-  (buttonClick)="navigateToGame('/memory-game')"
-></app-game-card>
-
-<app-game-card
-  title="Flappy Bird"
-  description="..."
-  buttonText="Play Now"
-  (buttonClick)="navigateToGame('/flappy-bird')"
-></app-game-card>
-
-
-
+@for( game of games; track game ){
   <app-game-card
-    title="Coming Soon!"
-    description="More fun games are on the way!"
-    buttonText="Stay Tuned"
-    [disabled]="true"
+    [title]="game.title"
+    [description]="game.description"
+    buttonText="Play Now"
+    (buttonClick)="navigateToGame(game.route)"
+
   ></app-game-card>
+}
 </section>
