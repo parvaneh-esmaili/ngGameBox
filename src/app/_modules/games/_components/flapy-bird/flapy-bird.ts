@@ -11,7 +11,7 @@ export class FlapyBird {
   positionY: number = 0;
   positionX: number = 0;
 
-  gravity: number = 5;
+  gravity: number = 2;
   ground: number = 0;
   gameOver: boolean = false;
 
