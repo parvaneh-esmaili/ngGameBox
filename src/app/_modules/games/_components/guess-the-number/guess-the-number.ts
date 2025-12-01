@@ -15,12 +15,15 @@ export class GuessTheNumber implements OnInit {
   lastChoice: number = 0;
   message : string = ''
   winner: string = '';
-  try: number = 5;
+  try: number = 10;
+  result: boolean = false
 
 
 
   ngOnInit(): void {
     this.mainNumber = Math.floor(Math.random() *100)
+          console.log(this.winner)
+
       console.log(this.mainNumber)}
       guessNumber(userNumber: number): void {
         if (userNumber < 0 || userNumber > 100) {
@@ -29,7 +32,8 @@ export class GuessTheNumber implements OnInit {
   }
 
   if (this.try <= 0) {
-    this.message = "No remaining attempts. Please restart the game.";
+    this.winner = "You Could Not Guess The Correct Number!!!.";
+    this.result = true
     return;
   }
 
@@ -40,6 +44,8 @@ export class GuessTheNumber implements OnInit {
   } else {
     this.winner = "🎉 You won the game!";
     this.message = "";
+    this.result = true
+
     return;
   }
 
@@ -57,6 +63,8 @@ reset() {
   this.userChoices = [];
   this.lastChoice = 0;
   this.mainNumber = Math.floor(Math.random() * 100);
+  this.result = false
+
   console.log(this.mainNumber)
 }
 

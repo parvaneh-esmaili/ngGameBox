@@ -7,18 +7,21 @@ import { Component, HostBinding, HostListener } from '@angular/core';
   styleUrl: './dino-runner.css',
 })
 export class DinoRunner {
-  posisionY: number = 0;
-  posisionx: number = 0;
-  jumpHeight: number = 80;
+  positionY: number = 0;
+  positionX: number = 0;
+  jumpHeight: number = 160;
   ground: number = 400;
   obstaclesHeight: number = 0;
+  gameOver: boolean = false;
 
   obstacles: { x: number; y: number; width: number; height: number }[] = [];
 
   constructor() {
     this.obstaclesHeight = Math.floor(Math.random() * 10);
-    this.posisionY = window.innerHeight = this.ground;
-    this.posisionx = window.innerWidth / 2;
+        console.log(this.obstacles)
+
+    this.positionY = this.ground;
+    this.positionX = window.innerWidth / 2;
     this.obstacles.push({
       x: window.innerWidth,
       y: this.ground - this.obstaclesHeight,
@@ -28,6 +31,7 @@ export class DinoRunner {
 
     setInterval(() => {
       this.moveObstacles();
+      this.checkCollision();
     }, 10);
   }
   @HostListener('window:click', ['$event'])
@@ -36,15 +40,14 @@ export class DinoRunner {
   }
 
   jump() {
-    this.posisionY -= this.jumpHeight;
-
+    this.positionY -= this.jumpHeight;
     setTimeout(() => {
-      this.posisionY = this.ground;
-    }, 500);
+      this.positionY = this.ground;
+    }, 600);
   }
 
   moveObstacles() {
-    this.obstaclesHeight = Math.floor(Math.random() * 100);
+    this.obstaclesHeight = Math.floor(Math.random() * 10);
 
     this.obstacles.forEach((obstacle) => {
       obstacle.x -= 2;
@@ -59,5 +62,23 @@ export class DinoRunner {
         height: 50 + this.obstaclesHeight,
       });
     }
+        // remove old pipes
+    if (this.obstacles[0].x + this.obstacles[0].width < 0) {
+      this.obstacles.shift();
+    }
+  }
+
+ checkCollision() {
+    const dinoW = 20;
+    const dinoH = 20;
+
+    const hit = this.obstacles.some(obs =>
+      this.positionX < obs.x + obs.width &&
+      this.positionX + dinoW > obs.x &&
+      this.positionY < obs.y + obs.height &&
+      this.positionY + dinoH > obs.y
+    );
+
+    if (hit) this.gameOver = true;
   }
 }
