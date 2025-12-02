@@ -1,0 +1,7 @@
+<div class=" h-full border border-blue-800/10 rounded-2xl m-12 bg-gray-50 shadow">
+  @if (game) {
+    <ng-container *ngComponentOutlet="gameMap[game]"></ng-container>
+  } @else {
+    <p>یک بازی انتخاب کنید 🎮</p>
+  }
+</div>

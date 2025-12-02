@@ -69,8 +69,8 @@ export class DinoRunner {
   }
 
  checkCollision() {
-    const dinoW = 20;
-    const dinoH = 20;
+    const dinoW = 10;
+    const dinoH = 10;
 
     const hit = this.obstacles.some(obs =>
       this.positionX < obs.x + obs.width &&
@@ -81,4 +81,5 @@ export class DinoRunner {
 
     if (hit) this.gameOver = true;
   }
+  
 }
