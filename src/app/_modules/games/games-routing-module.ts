@@ -7,7 +7,7 @@ import { GuessTheNumber } from './_components/guess-the-number/guess-the-number'
 import { MemoryGame } from './_components/memory-game/memory-game';
 import { FlapyBird } from './_components/flapy-bird/flapy-bird';
 import { DinoRunner } from './_components/dino-runner/dino-runner';
-import { Screen } from './_components/screen/screen';
+import { RacingGame } from './_components/racing-game/racing-game';
 
 const routes: Routes = [
   {path: '', component: Games, children:[
@@ -17,7 +17,7 @@ const routes: Routes = [
     { path: 'memory-game', component: MemoryGame},
     { path: 'flappy-bird', component: FlapyBird},
     { path: 'dino-runner', component: DinoRunner},
-    { path: 'screen', component: Screen}
+    { path: 'racing', component: RacingGame}
 
   ]}
 ];
