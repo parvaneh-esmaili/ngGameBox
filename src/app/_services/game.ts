@@ -37,7 +37,7 @@ export class GameService {
       title: 'Racing Game 🚗💨',
       description:
         'Race against time, dodge obstacles, and reach the finish line!',
-      route: '/racing-game',
+      route: '/racing',
     },
   ]);
 
