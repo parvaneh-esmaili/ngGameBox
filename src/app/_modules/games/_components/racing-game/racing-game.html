@@ -1,7 +1,17 @@
-<div class="relative h-[45rem] w-full bg-gray-800">
-    <div class="absolute h-16 w-24 bg-red-600"
+<div class="relative h-[40rem] w-full bg-gray-700 overflow-hidden">
+  <div
+    class="absolute h-16 w-24 bg-red-600"
     [style.top.px]="positionY"
     [style.left.px]="positionX"
-    ></div>
+  ></div>
+  @for(obs of obstacles; track obs){
+  <div
+    class="bg-black absolute"
+    [style.left.px]="obs.x"
+    [style.top.px]="obs.y"
+    [style.width.px]="obs.width"
+    [style.height.px]="obs.height"
+  ></div>
 
+  }
 </div>

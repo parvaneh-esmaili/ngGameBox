@@ -11,8 +11,9 @@ export class RacingGame {
   positionX: number;
   borderX: number;
   borderY: number;
-  private activeKeys: Set<string> = new Set();
-  private intervalId: number;
+  activeKeys: Set<string> = new Set();
+  intervalId: number;
+  obstacles: { x: number; y: number; width: number; height: number }[] = [];
 
   constructor() {
     this.positionX = window.innerWidth / 3;
@@ -20,10 +21,18 @@ export class RacingGame {
     this.borderX = window.innerWidth;
     this.borderY = window.innerHeight;
 
+    this.obstacles.push({
+      x: window.innerWidth,
+      y: Math.floor(Math.random() * window.innerHeight/3),
+      width: 60,
+      height: 150 + Math.floor(Math.random() * window.innerHeight/3),
+    });
+    console.log(this.obstacles)
+
     this.intervalId = window.setInterval(() => {
       if (
         this.activeKeys.has('ArrowDown') &&
-        this.positionY < this.borderY - 238
+        this.positionY < this.borderY - 320
       ) {
         this.positionY += 2;
       }
@@ -31,14 +40,15 @@ export class RacingGame {
         this.positionY -= 2;
       }
       if (this.activeKeys.has('ArrowLeft') && this.positionX > 0) {
-        this.positionX -= 2;
+        this.positionX -= 3;
       }
       if (
         this.activeKeys.has('ArrowRight') &&
         this.positionX < this.borderX - 250
       ) {
-        this.positionX += 2;
+        this.positionX += 3;
       }
+      this.moveObstacles();
     }, 10);
   }
 
@@ -51,4 +61,24 @@ export class RacingGame {
   handleKeyUp(event: KeyboardEvent) {
     this.activeKeys.delete(event.code);
   }
+  moveObstacles() {  
+      this.obstacles.forEach((obstacle) => obstacle.x -= 2)
+
+    const lastObstacle = this.obstacles[this.obstacles.length - 1];
+    if( lastObstacle.x <= window.innerWidth / 2  ){
+       this.obstacles.push({
+      x: window.innerWidth,
+      y: Math.floor(Math.random() * window.innerHeight/3),
+      width: 60,
+      height: 150 + Math.floor(Math.random() * window.innerHeight/3),
+    });
+
+
+  }      if(this.obstacles[0].x + this.obstacles[0].width <= 0 ){
+      this.obstacles.shift()
+
+    }
+    }
+
+
 }
