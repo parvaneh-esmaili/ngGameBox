@@ -11,7 +11,7 @@ export class FlapyBird {
   positionY: number = 0;
   positionX: number = 0;
 
-  gravity: number = 2;
+  gravity: number = 3;
   ground: number = 0;
   gameOver: boolean = false;
 
@@ -39,7 +39,7 @@ export class FlapyBird {
   }
 
   fly() {
-    this.positionY -= 150;
+    this.positionY -= 70;
     if (this.positionY < 100) {
       this.positionY = 100;
     }
@@ -72,7 +72,7 @@ export class FlapyBird {
     // add new pipes when last reaches half screen
     if (lastObstacle.x <= window.innerWidth / 2) {
       const gap = 150;
-      const topHeight = Math.random() * (window.innerHeight - gap - 100);
+      const topHeight = Math.random() * (window.innerHeight - gap - 150);
 
       this.obstacles.push({
         x: window.innerWidth,
@@ -94,28 +94,32 @@ export class FlapyBird {
       this.obstacles.shift();
     }
   }
-checkCollision() {
-  const birdW = 10
-  const birdH = 10;
+  checkCollision() {
+    const birdW = 10;
+    const birdH = 10;
 
-  const hit = this.obstacles.some(obs =>
-    this.positionX < obs.x + obs.width &&
-    this.positionX + birdW > obs.x &&
-    this.positionY < obs.y + obs.height &&
-    this.positionY + birdH > obs.y
-  );
+    const hit = this.obstacles.some(
+      (obs) =>
+        this.positionX < obs.x + obs.width &&
+        this.positionX + birdW > obs.x &&
+        this.positionY < obs.y + obs.height &&
+        this.positionY + birdH > obs.y
+    );
 
-  if (hit) this.gameOver = true;
-}
+    if (hit) this.gameOver = true;
+  }
 
-
-
-  reset(){
+  reset() {
     this.gameOver = false;
-     this.positionX = window.innerHeight;
-     this.obstacles = [
-    { x: window.innerWidth, y: 0, width: 60, height: 200 },
-    { x: window.innerWidth, y: 300, width: 60, height: window.innerHeight - 300 },
-  ];
+    this.positionX = window.innerHeight;
+    this.obstacles = [
+      { x: window.innerWidth, y: 0, width: 60, height: 200 },
+      {
+        x: window.innerWidth,
+        y: 300,
+        width: 60,
+        height: window.innerHeight - 300,
+      },
+    ];
   }
 }

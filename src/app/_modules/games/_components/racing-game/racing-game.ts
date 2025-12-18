@@ -14,8 +14,12 @@ export class RacingGame {
   activeKeys: Set<string> = new Set();
   intervalId: number;
   obstacles: { x: number; y: number; width: number; height: number }[] = [];
+  y: number = 0
+
+
 
   constructor() {
+    console.log( window.innerWidth / 1)
     this.positionX = window.innerWidth / 3;
     this.positionY = window.innerHeight / 3;
     this.borderX = window.innerWidth;
@@ -23,11 +27,12 @@ export class RacingGame {
 
     this.obstacles.push({
       x: window.innerWidth,
-      y: Math.floor(Math.random() * window.innerHeight/3),
+      y: Math.floor((Math.random() * window.innerHeight) / 3),
       width: 60,
-      height: 150 + Math.floor(Math.random() * window.innerHeight/3),
+      height: this.y += 60,
     });
-    console.log(this.obstacles)
+    
+    console.log(this.obstacles);
 
     this.intervalId = window.setInterval(() => {
       if (
@@ -61,24 +66,20 @@ export class RacingGame {
   handleKeyUp(event: KeyboardEvent) {
     this.activeKeys.delete(event.code);
   }
-  moveObstacles() {  
-      this.obstacles.forEach((obstacle) => obstacle.x -= 2)
+  moveObstacles() {
+    this.obstacles.forEach((obstacle) => (obstacle.x -= 2));
 
     const lastObstacle = this.obstacles[this.obstacles.length - 1];
-    if( lastObstacle.x <= window.innerWidth / 2  ){
-       this.obstacles.push({
+    if (lastObstacle.x <= window.innerWidth / 1.5) {
+     this.obstacles.push({
       x: window.innerWidth,
-      y: Math.floor(Math.random() * window.innerHeight/3),
-      width: 60,
-      height: 150 + Math.floor(Math.random() * window.innerHeight/3),
+      y: Math.floor((Math.random() * window.innerHeight) / 3),
+      width: 160,
+      height:  100,
     });
-
-
-  }      if(this.obstacles[0].x + this.obstacles[0].width <= 0 ){
-      this.obstacles.shift()
-
     }
+    if (this.obstacles[0].x + this.obstacles[0].width <= 0) {
+      this.obstacles.shift();
     }
-
-
+  }
 }
