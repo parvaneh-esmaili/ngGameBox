@@ -5,6 +5,7 @@ import { Component, HostListener } from '@angular/core';
   imports: [],
   templateUrl: './racing-game.html',
   styleUrl: './racing-game.css',
+  standalone: true
 })
 export class RacingGame {
   positionY: number;
@@ -19,7 +20,6 @@ export class RacingGame {
 
 
   constructor() {
-    console.log( window.innerWidth / 1)
     this.positionX = window.innerWidth / 3;
     this.positionY = window.innerHeight / 3;
     this.borderX = window.innerWidth;
@@ -31,7 +31,7 @@ export class RacingGame {
       width: 60,
       height: this.y += 60,
     });
-    
+
     console.log(this.obstacles);
 
     this.intervalId = window.setInterval(() => {
